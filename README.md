@@ -1,5 +1,7 @@
 # DSH Bridge
 
+**中文** ｜ [English](README.en.md)
+
 > 把 [DeepSeek Harness](https://github.com/deepseek-ai) 接进 Zotero：在文献上右键提问、在阅读器里划词提问，回答直接落成 Zotero 笔记。
 
 [![Zotero](https://img.shields.io/badge/Zotero-9.0.6%20tested-CC2936)](https://www.zotero.org)
