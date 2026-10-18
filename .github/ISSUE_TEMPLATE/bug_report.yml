@@ -1,0 +1,65 @@
+name: Bug report
+description: Something did not work — install, connection, or an empty answer
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying DSH Bridge. Two checks below resolve most reports before we start guessing.
+
+  - type: input
+    id: zotero
+    attributes:
+      label: Zotero version
+      description: "Help → About Zotero. Only 9.0.6 is developed and tested against, so this matters."
+      placeholder: "9.0.6"
+    validations:
+      required: true
+
+  - type: textarea
+    id: dshcli
+    attributes:
+      label: Output of the dsh command
+      description: |
+        Run this in a terminal and paste everything it prints (**this is the single most useful field**):
+
+        ```
+        echo 测试 | node "<your dsh bin.js>" --profile "<your profile>" --json -
+        ```
+
+        If it ends with `{"type":"final","text":"..."}` and exit code 0, the dsh side is fine and the problem is in the plugin. If it ends with an error line, that line is the cause.
+      render: shell
+    validations:
+      required: true
+
+  - type: dropdown
+    id: testconnection
+    attributes:
+      label: What does Settings → DSH Bridge → "Test connection" say?
+      options:
+        - Passes (green)
+        - Fails
+        - Not run yet
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: |
+        Since v1.11.0 the dialog shows the **stderr tail** when a run fails — paste that block if you have it.
+        A screenshot of the chat window is also fine.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I read the "Known limitations" section of the README (reader sidebar, DSH restart for registered sessions, credentials service).
+          required: true
+        - label: I am not pasting an API key or any other secret.
+          required: true
