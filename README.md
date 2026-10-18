@@ -6,6 +6,8 @@
 [![DSH](https://img.shields.io/badge/DSH-0.2.1--rc.2-4B6BFB)](#前置要求)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+**English** — Zotero's plugin market has 100+ AI plugins, and each of them brings its own model. This one brings *yours*: it drives your local [DeepSeek Harness](https://github.com/deepseek-ai) through `dsh --profile <name> --json -`, so everything your `dsh` can do — your knowledge base, literature search, citation tools, file access — is available from a Zotero dialog. Answers can be checked citation-by-citation against the exact text that was sent to the model, and saved back as Zotero notes. Requires Zotero 7+ (tested on 9.0.6) and a working `dsh` install. **See [已知限制](#已知限制请先读这一段) for what it deliberately cannot do.**
+
 ---
 
 ## 它解决什么问题
