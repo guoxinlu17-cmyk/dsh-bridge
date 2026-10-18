@@ -1,0 +1,18 @@
+# 构建产物
+*.xpi
+*.zip
+
+# 依赖与本地配置
+node_modules/
+.env
+.env.*
+
+# 日志与临时文件
+*.log
+*.tmp
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+desktop.ini

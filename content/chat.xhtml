@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://dshbridge/content/chat.css" type="text/css"?>
+<!--
+  对话窗口。
+
+  结构照搬 llm-for-zotero 的 standaloneChat.xhtml（★3289，AGPL-3.0，已在其 Zotero 9 上运行）：
+    XUL <window> 作外壳 → 得到正规的窗口管理（minwidth/persist/居中）
+    html:div 作内容根 → CSS 与 DOM 完全按 HTML 来
+  这比"纯 HTML 文档"更稳：窗口行为交给 XUL，界面交给 HTML。
+-->
+<window
+  id="dshbridge-chat-window"
+  title="DSH 对话"
+  width="920" height="740"
+  minwidth="560" minheight="420"
+  persist="screenX screenY width height"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  style="min-width: 560px; min-height: 420px">
+
+  <html:div id="dsh-root"></html:div>
+
+  <!-- v1.4.0：先加载 Markdown 词法器/渲染器（暴露 window.MD），再加载窗口逻辑。
+       两者都只构造 DOM 节点，全程不使用 innerHTML —— 回答内容来自模型，属不可信文本。 -->
+  <script src="chrome://dshbridge/content/markdown.js"/>
+  <script src="chrome://dshbridge/content/cite.js"/>
+  <script src="chrome://dshbridge/content/chat.js"/>
+</window>

@@ -1,0 +1,114 @@
+<!--
+  DSH Bridge 设置面板
+  由 bootstrap.js 用 Zotero.PreferencePanes.register({ pluginID, src, id, scripts }) 注册。
+
+  写法是照抄 Zotero 自己的面板（chrome/content/zotero/preferences/preferences_general.xhtml）：
+    · 根元素是 XUL <vbox>，**不写 XML 声明、不写 xmlns** —— Zotero 的面板就是这么放的
+    · preference="<完整首选项键>" 由 Zotero 的偏好系统自动双向绑定
+    · 面板脚本通过 register() 的 scripts 参数加载，定义在 content/preferences.js
+-->
+<vbox id="dshbridge-prefpane" onload="DSHBridgePrefs.init()">
+
+  <vbox class="main-section">
+
+    <groupbox>
+      <label><html:h2>DSH Bridge</html:h2></label>
+      <description style="white-space: pre-wrap;">把 DeepSeek Harness 接进 Zotero。
+下面这些以前只能去「设置 → 高级 → 配置编辑器」改。</description>
+    </groupbox>
+
+    <groupbox>
+      <label><html:h3>运行环境</html:h3></label>
+
+      <hbox align="center">
+        <label value="node.exe 路径" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.nodePath" flex="1"/>
+      </hbox>
+
+      <hbox align="center">
+        <label value="dsh 的 bin.js" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.dshBin" flex="1"/>
+      </hbox>
+
+      <hbox align="center">
+        <label value="DSH profile" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.profile" flex="1"/>
+      </hbox>
+
+      <hbox align="center">
+        <button label="测试连接" oncommand="DSHBridgePrefs.test()"/>
+        <description style="margin-left: 1em;">检查两个路径 + 用 --dump-config 试跑一次（不调模型，几秒）</description>
+      </hbox>
+      <description id="dshbridge-test-result" style="white-space: pre-wrap; font-family: Consolas, monospace;"/>
+    </groupbox>
+
+    <groupbox>
+      <label><html:h3>工作区与文件</html:h3></label>
+
+      <hbox align="center">
+        <label value="对话工作区" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.workspace" flex="1"/>
+      </hbox>
+      <description style="white-space: pre-wrap;">留空 = 跑在 Zotero 进程自己的目录。
+已核实：DSH 的「工作区」就是子进程的当前工作目录，插件用 Subprocess 的 workdir 传它。
+在对话窗口顶栏的下拉框里选，效果与这里相同。</description>
+      <description id="dshbridge-ws-info" style="white-space: pre-wrap; margin: 6px 0 0 1em;"/>
+
+      <hbox align="center">
+        <label value="工作区登记表" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.workspaceRegistry" flex="1"/>
+      </hbox>
+      <description>留空 = 自动用 ~/.dsh/storages/workspace.json（从家目录拼，不写死用户名）</description>
+
+      <hbox align="center">
+        <label value="日志文件" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.logPath" flex="1"/>
+      </hbox>
+      <description>留空 = 关闭文件日志。超过 2 MB 自动轮转为 .1</description>
+
+      <hbox align="center">
+        <label value="会话历史文件" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.historyPath" flex="1"/>
+      </hbox>
+      <description>留空 = 与日志同目录的 dsh-bridge-history.json</description>
+    </groupbox>
+
+    <groupbox>
+      <label><html:h3>行为开关</html:h3></label>
+
+      <checkbox preference="extensions.dshbridge.includeFulltext"
+                label="默认附带附件全文"/>
+      <description style="margin-left: 1.5em;">关闭后只发元数据（题名/作者/年份/出处/DOI）</description>
+
+      <checkbox preference="extensions.dshbridge.readerIntegration"
+                label="在阅读器里注入入口（划词浮层 / 工具栏按钮 / 批注侧栏）"/>
+      <description style="margin-left: 1.5em;">改动后需重启 Zotero 生效</description>
+
+      <checkbox preference="extensions.dshbridge.registerSessions"
+                label="把会话登记进 DSH 工作区（使其在 DSH 界面里直接可见）"/>
+      <description style="margin-left: 1.5em;">会写入 workspace.json（写前备份、只增不删）。关掉不影响对话</description>
+    </groupbox>
+
+    <groupbox>
+      <label><html:h3>数值</html:h3></label>
+
+      <hbox align="center">
+        <label value="超时（秒）" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.timeoutSec" style="width: 8em;"/>
+      </hbox>
+
+      <hbox align="center">
+        <label value="单次全文上限（字）" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.maxFulltextChars" style="width: 8em;"/>
+      </hbox>
+      <description>截断是「先到先得」的：选多篇时，超出的会被整篇略去。材料面板会标出来。</description>
+
+      <hbox align="center">
+        <label value="集合名" style="min-width: 11em;"/>
+        <textbox preference="extensions.dshbridge.noteCollectionName" flex="1"/>
+      </hbox>
+      <description>「建集合」用；同名会复用，不重复创建</description>
+    </groupbox>
+
+  </vbox>
+</vbox>

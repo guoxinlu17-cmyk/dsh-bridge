@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "DSH Bridge",
+  "version": "1.11.0",
+  "description": "把 DeepSeek Harness 接进 Zotero：选中文献即可提问，自动附带元数据与全文。",
+  "author": "DSH Bridge contributors",
+  "icons": {
+    "48": "content/icon.svg",
+    "96": "content/icon.svg"
+  },
+  "applications": {
+    "zotero": {
+      "id": "dsh-bridge@local.example",
+      "update_url": "https://example.com/dsh-bridge/update.json",
+      "strict_min_version": "6.999",
+      "strict_max_version": "9999.*"
+    }
+  }
+}
